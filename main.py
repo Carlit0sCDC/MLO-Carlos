@@ -11,8 +11,6 @@ df_limpio['metascore'] = pd.to_numeric(df_limpio['metascore'], errors='coerce')
 
 app = FastAPI(title='Proyecto de Machine Learning Operations de juegos de Steam')
 
-data = pd.read_json('datos_exportados.json')
-
 data['release_date'] = pd.to_datetime(data['release_date'], format='mixed', errors='coerce')
 
 @app.get('/genero/{anio}')
