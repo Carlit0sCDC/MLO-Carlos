@@ -12,7 +12,7 @@ df_limpio['metascore'] = pd.to_numeric(df_limpio['metascore'], errors='coerce')
 app = FastAPI(title='Proyecto de Machine Learning Operations de juegos de Steam')
 
 @app.get('/genero/{anio}')
-def genero(anio):
+async def genero(anio):
    # Filtrar los registros del año ingresado
     df_anio = df_limpio[df_limpio['release_date'].dt.year == int(anio)]
 
@@ -28,7 +28,7 @@ def genero(anio):
     return top_generos_con_posicion
 
 @app.get('/juegos/{anio}')
-def juegos(anio):
+async def juegos(anio):
     try:
         # Validar que el año sea un valor numérico válido
         anio_entero = int(anio)
@@ -47,7 +47,7 @@ def juegos(anio):
     return juegos_lanzados
 
 @app.get('/specs/{anio}')
-def specs(anio):
+async def specs(anio):
     try:
         # Validar que el año sea un valor numérico válido
         anio_entero = int(anio)
@@ -70,7 +70,7 @@ def specs(anio):
     return top_specs_con_posicion
 
 @app.get('/earlyaccess/{anio}')
-def earlyaccess(anio):
+async def earlyaccess(anio):
     try:
         # Validar que el año sea un valor numérico válido
         anio_entero = int(anio)
@@ -89,7 +89,7 @@ def earlyaccess(anio):
     return cantidad_early_access
 
 @app.get('/sentiment/{anio}')
-def sentiment(anio):
+async def sentiment(anio):
     try:
         # Validar que el año sea un valor numérico válido
         anio_entero = int(anio)
@@ -108,7 +108,7 @@ def sentiment(anio):
     return conteo_categorias.to_dict()
 
 @app.get('/metascore/{anio}')
-def metascore(anio):
+async def metascore(anio):
     try:
         # Validar que el año sea un valor numérico válido
         anio_entero = int(anio)
