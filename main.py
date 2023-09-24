@@ -9,6 +9,12 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 import joblib
 
+# Cambiamos a tipo date las fechas
+df_limpio["release_date"] = pd.to_datetime(df_limpio["release_date"])
+
+# Cambiamos el tipo de dato de sentiment a categórico
+df_limpio["sentiment"] = df_limpio["sentiment"].astype("category")
+
 app = FastAPI(title='Proyecto de Machine Learning Operations de juegos de Steam')
 
 # Variables globales
@@ -47,12 +53,6 @@ async def load_data_and_model():
     y_test_pred = tree_regressor.predict(X_test)
 
     rmse_train = mean_squared_error(y_train, y_train_pred, squared=False)
-
-# Cambiamos a tipo date las fechas
-df_limpio["release_date"] = pd.to_datetime(df_limpio["release_date"])
-
-# Cambiamos el tipo de dato de sentiment a categórico
-df_limpio["sentiment"] = df_limpio["sentiment"].astype("category")
 
 @app.get('/genero/{anio}')
 async def genero(anio):
