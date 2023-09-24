@@ -2,3 +2,8 @@ pandas
 numpy
 fastapi
 uvicorn
+joblib
+scikit-learn
+scipy
+seaborn
+matplotlib
