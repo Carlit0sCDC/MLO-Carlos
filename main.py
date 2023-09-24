@@ -48,10 +48,24 @@ async def load_data_and_model():
 
     rmse_train = mean_squared_error(y_train, y_train_pred, squared=False)
 
+# Cambiamos a tipo date las fechas
+df_limpio["release_date"] = pd.to_datetime(df_limpio["release_date"])
+
+# Cambiamos el tipo de dato de sentiment a categórico
+df_limpio["sentiment"] = df_limpio["sentiment"].astype("category")
+
 @app.get('/genero/{anio}')
 async def genero(anio):
+    try:
+        # Validar que el año sea un valor numérico válido
+        anio_entero = int(anio)
+    except ValueError:
+        raise HTTPException(status_code=400, detail='El año proporcionado no es válido.')
    # Filtrar los registros del año ingresado
-    df_anio = df_limpio[df_limpio['release_date'].dt.year == int(anio)]
+    df_anio = df_limpio[df_limpio['año'] == int(anio)]
+
+    if df_anio.empty:
+        raise HTTPException(status_code=404, detail='No se encontraron juegos para el año proporcionado.')
 
     # Contar la frecuencia de cada género
     generos_contados = df_anio['genres'].explode().value_counts()
@@ -73,7 +87,7 @@ async def juegos(anio):
         raise HTTPException(status_code=400, detail='El año proporcionado no es válido.')
 
     # Filtrar los registros del año ingresado
-    df_anio = df_limpio[df_limpio['release_date'].dt.year == anio_entero]
+    df_anio = df_limpio[df_limpio['año'] == anio_entero]
 
     if df_anio.empty:
         raise HTTPException(status_code=404, detail='No se encontraron juegos para el año proporcionado.')
@@ -92,7 +106,7 @@ async def specs(anio):
         raise HTTPException(status_code=400, detail='El año proporcionado no es válido.')
 
     # Filtrar los registros del año ingresado
-    df_anio = df_limpio[df_limpio['release_date'].dt.year == anio_entero]
+    df_anio = df_limpio[df_limpio['año'] == anio_entero]
 
     if df_anio.empty:
         raise HTTPException(status_code=404, detail='No se encontraron juegos para el año proporcionado.')
