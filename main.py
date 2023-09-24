@@ -9,12 +9,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 import joblib
 
-
-df_limpio = pd.read_json('nuevos_datos.json')
-
-df_limpio['release_date'] = pd.to_datetime(df_limpio["release_date"], errors='coerce')
-df_limpio['metascore'] = pd.to_numeric(df_limpio['metascore'], errors='coerce')
-
 app = FastAPI(title='Proyecto de Machine Learning Operations de juegos de Steam')
 
 # Variables globales
