@@ -123,7 +123,7 @@ async def earlyaccess(anio):
         raise HTTPException(status_code=400, detail='El año proporcionado no es válido.')
 
     # Filtrar los registros del año ingresado y que estén en early access
-    df_anio_early_access = df_limpio[(df_limpio['release_date'].dt.year == anio_entero) & (df_limpio['early_access'] == True)]
+    df_anio_early_access = df_limpio[(df_limpio['año']) & (df_limpio['early_access'] == True)]
 
     if df_anio_early_access.empty:
         raise HTTPException(status_code=404, detail='No se encontraron juegos en early access para el año proporcionado.')
@@ -142,7 +142,7 @@ async def sentiment(anio):
         raise HTTPException(status_code=400, detail='El año proporcionado no es válido.')
 
     # Filtrar los registros del año ingresado
-    df_anio = df_limpio[df_limpio['release_date'].dt.year == anio_entero]
+    df_anio = df_limpio[df_limpio['año'] == anio_entero]
 
     if df_anio.empty:
         raise HTTPException(status_code=404, detail='No se encontraron registros para el año proporcionado.')
@@ -161,7 +161,7 @@ async def metascore(anio):
         raise HTTPException(status_code=400, detail='El año proporcionado no es válido.')
 
     # Filtrar los registros del año ingresado
-    df_anio = df_limpio[df_limpio['release_date'].dt.year == anio_entero]
+    df_anio = df_limpio[df_limpio['año'] == anio_entero]
 
     if df_anio.empty:
         raise HTTPException(status_code=404, detail='No se encontraron registros para el año proporcionado.')
